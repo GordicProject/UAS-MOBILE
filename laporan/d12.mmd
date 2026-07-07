@@ -1,0 +1,31 @@
+%% ACTIVITY DIAGRAM — Buat Tiket → Detail (User Flow Lengkap)
+graph LR
+    Start(["Mulai"]) --> Step1["User buka /dashboard<br/>tap 'Buat Tiket Baru'"]
+
+    Step1 --> Step2["CreateTicketScreen tampil"]
+    Step2 --> Step3["Isi Form:<br/>Title, Deskripsi, Kategori, Prioritas"]
+    Step3 --> Validate{Form<br/>Valid?}
+
+    Validate -->|Tidak| Err["Error per-field<br/>merah"]
+    Err --> Step3
+
+    Validate -->|Ya| Loading["CircularProgressIndicator<br/>Loading overlay"]
+    Loading --> Provider["TicketProvider<br/>.createTicket"]
+    Provider --> Service["SupabaseService"]
+    Service --> Ins1["INSERT tickets<br/>status='open'"]
+    Service --> Ins2["INSERT ticket_history"]
+    Service --> Ins3["INSERT notifications"]
+
+    Ins1 --> InsertOK{Semua<br/>OK?}
+    Ins2 --> InsertOK
+    Ins3 --> InsertOK
+
+    InsertOK -->|Tidak| Fail["Transaction gagal<br/>SnackBar merah"]
+    Fail --> Step1
+
+    InsertOK -->|Ya| Success["notifyListeners<br/>Navigator.pop"]
+    Success --> SnackBar["SnackBar hijau:<br/>'Tiket berhasil!'"]
+    SnackBar --> SeeTicket["User lihat tiket baru di list"]
+    SeeTicket --> TapTicket["User tap tiket tersebut"]
+    TapTicket --> Detail["TicketDetailScreen<br/>reload all data"]
+    Detail --> End(["Selesai"])

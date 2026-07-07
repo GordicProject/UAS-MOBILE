@@ -1,0 +1,18 @@
+flowchart TB
+    subgraph Flutter["FLUTTER APP"]
+        direction LR
+        A[Views<br/>Screens] --> B[Providers<br/>ViewModel]
+        B --> C[Services<br/>Repository]
+        C --> D[Supabase Client]
+    end
+
+    subgraph Supabase["SUPABASE"]
+        direction TB
+        E[(PostgreSQL)]
+        F[(Storage)]
+    end
+
+    D -->|HTTPS| E
+    D -->|HTTPS| F
+    D -.->|GoRouter events| A
+    B -.->|notifyListeners| A

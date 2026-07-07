@@ -1,0 +1,20 @@
+flowchart TD
+    U["User/Helpdesk tap Ubah Status"] --> D["DetailScreen<br/>tampilkan dialog confirm"]
+    D --> C{Tap Ya?}
+
+    C -- No --> D
+    C -- Yes --> UP["TicketProvider.updateTicketStatus"]
+    UP --> SS2["SupabaseService.updateTicketStatus"]
+
+    SS2 --> T1["UPDATE tickets SET<br/>status=?, updated_at"]
+    SS2 --> T2["INSERT ticket_history"]
+    SS2 --> T3["INSERT notifications"]
+
+    T1 --> OK2["200 OK"]
+    T2 --> OK2
+    T3 --> OK2
+
+    OK2 --> RL["reload getAllTickets"]
+    RL --> N["notifyListeners"]
+    N --> UI["UI rebuild<br/>badge status berubah"]
+    UI --> SB2["SnackBar status diperbarui"]

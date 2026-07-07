@@ -1,0 +1,34 @@
+%% LOGIN USER FLOW — eTicketing
+graph TB
+    U[User]
+    LS[LoginScreen]
+    FB[Form.validate]
+    DV{Valid?}
+    ER[Error per Field]
+    LO[CircularProgressIndicator]
+    AP[AuthProvider]
+    SV[SupabaseService]
+    DB[(Users Table)]
+    UL[UserModel]
+    AS[Save CurrentUser]
+    SU{{Login SUKSES}}
+    FI{{Login GAGAL}}
+    SN[SnackBar Error]
+    RB[Route to Dashboard]
+
+    U --> LS
+    LS --> FB
+    FB --> DV
+    DV --> ER
+    ER --> LS
+    DV --> LO
+    LO --> AP
+    AP --> SV
+    SV --> DB
+    DB --> SU
+    DB --> FI
+    SU --> UL
+    UL --> AS
+    AS --> RB
+    FI --> SN
+    SN --> LS

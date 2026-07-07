@@ -1,0 +1,58 @@
+%% COMPONENT DIAGRAM — eTicketing Architecture
+graph BT
+    subgraph Presentation["PRESENTATION LAYER (Flutter UI)"]
+        subgraph ScreenLayers["Screens"]
+            SL1["SplashScreen"]
+            SL2["LoginScreen"]
+            SL3["RegisterScreen"]
+            SL4["ResetPasswordScreen"]
+            SL5["ProfileScreen"]
+            SL6["MainShell (BottomNav)"]
+            SL7["DashboardScreen"]
+            SL8["TicketListScreen"]
+            SL9["CreateTicketScreen"]
+            SL10["TicketDetailScreen"]
+            SL11["NotificationScreen"]
+            SL12["UserManagementScreen"]
+        end
+        subgraph WidgetLibrary["Reusable Widgets"]
+            WL1["TicketCardWidget"]
+            WL2["StatusBadgeWidget"]
+            WL3["EmptyWidget"]
+            WL4["ErrorWidget"]
+            WL5["LoadingWidget"]
+        end
+    end
+
+    Presentation -->|"Consumer<T> + Provider<T>"| StateManagement
+
+    subgraph StateManagement["STATE MANAGEMENT (Riverpod/ChangeNotifier)"]
+        SM1["AuthProvider<br/>currentUser/login/logout"]
+        SM2["TicketProvider<br/>tickets/create/update/status"]
+        SM3["ThemeProvider<br/>darkMode/themeData"]
+    end
+
+    StateManagement -->|"service methods"| ServiceLayer
+
+    subgraph ServiceLayer["SERVICE LAYER (Repository Pattern)"]
+        SVC1["SupabaseService<br/>• login / register / resetPassword<br/>• CRUD tickets/comments/history<br/>• notifications / attachments"]
+    end
+
+    ServiceLayer -->|"REST / PostgREST"| DataSource
+
+    subgraph DataSource["DATA SOURCE (Supabase / PostgreSQL)"]
+        DS1[(Table: users)]
+        DS2[(Table: tickets)]
+        DS3[(Table: comments)]
+        DS4[(Table: ticket_history)]
+        DS5[(Table: notifications)]
+        DS6[(Table: ticket_attachments)]
+    end
+
+    SL1 --> SL2
+    SL6 --> SL7
+    SL6 --> SL8
+    SL6 --> SL10
+    SL6 --> SL11
+    SL6 --> SL12
+    SL10 --> WL1 --> WL3

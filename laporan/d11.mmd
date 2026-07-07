@@ -1,0 +1,46 @@
+%% USE CASE DIAGRAM — eTicketing Helpdesk
+graph BT
+    subgraph SystemBoundary["SISTEM eTicketing Helpdesk"]
+        UC01["UC01: Login"]
+        UC02["UC02: Register"]
+        UC03["UC03: Buat Tiket"]
+        UC04["UC04: Lihat Detail Tiket"]
+        UC05["UC05: Komentar di Tiket"]
+        UC06["UC06: Lihat Notifikasi"]
+        UC07["UC07: Tandai Notifikasi Dibaca"]
+        UC08["UC08: Lihat Daftar Tiket"]
+        UC09["UC09: Ubah Status Tiket"]
+        UC10["UC10: Assign Tiket"]
+        UC11["UC11: Lihat Semua Tiket"]
+        UC12["UC12: Toggle Dark Mode"]
+        UC13["UC13: Kelola Akun"]
+    end
+
+    User(("USER"))
+    Helpdesk(("HELPDESK"))
+    Admin(("ADMIN"))
+
+    User --> UC01
+    User --> UC03
+    User --> UC04
+    User --> UC05
+    User --> UC06
+    User --> UC07
+    User --> UC08
+    User --> UC12
+    User --> UC13
+
+    Helpdesk --> UC01
+    Helpdesk --> UC04
+    Helpdesk --> UC05
+    Helpdesk --> UC09
+    Helpdesk --> UC10
+    Helpdesk --> UC11
+    Helpdesk --> UC12
+
+    Admin --> UC01
+    Admin --> UC09
+    Admin --> UC10
+    Admin --> UC11
+    Admin --> UC12
+    Admin --> UC13

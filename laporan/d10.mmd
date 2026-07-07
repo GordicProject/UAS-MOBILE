@@ -1,0 +1,32 @@
+flowchart TD
+    AppIcon[Ikon App] --> Splash["Splash<br/>cek token 2 dtk"]
+
+    Splash --> T2{Token tersimpan?}
+    T2 -- Ya --> Shell["Main Shell<br/>BottomNav 4 Tab"]
+    T2 -- Tidak --> Login["Login Screen"]
+
+    Login --> Reg["RegisterScreen"]
+    Reg --> Login
+
+    Shell --> Tab1["Dashboard tab 1"]
+    Shell --> Tab2["TicketList tab 2"]
+    Shell --> Tab3["Notification tab 3"]
+    Shell --> Tab4["Profile tab 4"]
+
+    Tab1 --> TT2["tap tiket"] --> Det2["TicketDetail"]
+    Tab1 --> CB2["Tambah Tiket"] --> Create2["CreateTicket<br/>submit -> SnackBar"]
+    Tab2 --> TS3["tap tiket"] --> Det2
+    Tab2 --> Create2
+    Tab3 --> FF2["tap filter 'Belum Dibaca'"]
+    Tab3 --> MA2["tap centang semua"]
+    Tab3 --> TN2["tap notif -> TicketDetail"]
+    Tab4 --> LO2["tap Logout"]
+
+    LO2 --> BG["Background / Pause"]
+    Det2 --> BG
+
+    BG --> Resumed["Resumed / Foreground"]
+    Resumed --> Refresh2["refresh data"]
+    Refresh2 --> CN2["cek tiket baru"]
+    CN2 --> Badge["update counter badge"]
+    Badge --> Shell

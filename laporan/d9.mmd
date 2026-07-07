@@ -1,0 +1,26 @@
+stateDiagram-v2
+    [*] --> Killed: app di-install
+
+    Killed --> Resumed: cold launch
+    Resumed --> Paused: window background
+    Paused --> Resumed: resume dari background
+    Resumed --> [*]: os kill
+    Paused --> [*]: os kill
+
+    note right of Resumed
+      initState()
+      cek session Supabase
+      WidgetsBindingObserver
+    end note
+
+    note right of Paused
+      pause stream subscription
+      tunda timer
+      simpan state ke disk
+    end note
+
+    note left of Killed
+      dispose()
+      tutup koneksi realtime
+      flush SharedPreferences
+    end note

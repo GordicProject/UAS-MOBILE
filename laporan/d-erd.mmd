@@ -1,0 +1,73 @@
+erDiagram
+    USERS ||--o{ TICKETS : "creates"
+    USERS ||--o{ TICKETS : "assigned as"
+    USERS ||--o{ COMMENTS : "writes"
+    USERS ||--o{ NOTIFICATIONS : "receives"
+    USERS ||--o{ TICKET_HISTORY : "logs"
+    USERS ||--o{ TICKET_ATTACHMENTS : "uploads"
+
+    USERS ||--|| USERS : "responds_to (admin)"
+    TICKETS ||--o{ COMMENTS : "has"
+    TICKETS ||--o{ TICKET_HISTORY : "has"
+    TICKETS ||--o{ TICKET_ATTACHMENTS : "has"
+    TICKETS ||--o{ NOTIFICATIONS : "triggers"
+
+    USERS {
+        uuid id PK
+        string name
+        string email UK
+        string password
+        string role
+        string avatar_url
+        timestamp created_at
+        boolean is_active
+    }
+
+    TICKETS {
+        uuid id PK
+        string title
+        text description
+        string category
+        string priority
+        uuid user_id FK
+        string status
+        uuid assigned_to FK
+        timestamp updated_at
+        jsonl attachment_ids
+    }
+
+    COMMENTS {
+        uuid id PK
+        text content
+        uuid ticket_id FK
+        uuid user_id FK
+        timestamp created_at
+    }
+
+    TICKET_HISTORY {
+        uuid id PK
+        uuid ticket_id FK
+        string status
+        text note
+        timestamp created_at
+    }
+
+    TICKET_ATTACHMENTS {
+        uuid id PK
+        uuid ticket_id FK
+        string storage_path
+        string filename
+        integer file_size
+        uuid uploaded_by FK
+        timestamp created_at
+    }
+
+    NOTIFICATIONS {
+        uuid id PK
+        string title
+        string message
+        uuid user_id FK
+        uuid ticket_id FK
+        boolean is_read
+        timestamp created_at
+    }

@@ -1,0 +1,15 @@
+sequenceDiagram
+    participant U as User
+    participant CS as CreateTicketScreen
+    participant TP as TicketProvider
+    participant SS as SupabaseService
+    participant DB as Supabase DB
+
+    U->>CS: tap "Buat Tiket"
+    CS->>TP: createTicket()
+    TP->>SS: createTicket(...)
+    SS->>DB: INSERT tickets
+    DB-->>SS: result
+    SS-->>TP: ticketId or error
+    TP-->>CS: notifyListeners()
+    CS-->>U: tampilkan hasil

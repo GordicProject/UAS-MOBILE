@@ -1,0 +1,15 @@
+flowchart LR
+    T[Trigger] --> S3[3 Sumber Trigger]
+    subgraph Srcs["3 Sumber Trigger Refresh"]
+        direction TB
+        S3 --> S1["1. buka tab Notifikasi"]
+        S3 --> S2["2. pull-to-refresh"]
+        S3 --> S4["3. app resume dari bg"]
+    end
+    S3 --> LS["_loadNotifications"]
+    LS --> TP["TicketProvider<br/>getNotifications"]
+    TP --> SVC["SupabaseService"]
+    SVC --> DB["SELECT * FROM notifications<br/>ORDER BY created_at DESC"]
+    DB --> NL["notifyListeners"]
+    NL --> LV["ListView.builder<br/>cards"]
+    LV --> SB["SnackBar 'N notifikasi terbaru'"]

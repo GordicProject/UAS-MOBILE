@@ -1,0 +1,22 @@
+flowchart TD
+    U["User isi form & tap Submit"] --> S["CreateTicketScreen<br/>Form.validate()"]
+    S --> V{Valid?}
+
+    V -- No --> ER["tampilkan error merah<br/>per-field"] --> U
+    V -- Yes --> LO["CircularProgressIndicator"]
+
+    LO --> TP["TicketProvider.createTicket"]
+    TP --> SC2["SupabaseService.createTicket"]
+    SC2 --> T1["INSERT tickets<br/>status='open'"]
+    SC2 --> T2["INSERT ticket_history"]
+    SC2 --> T3["INSERT notifications"]
+
+    T1 --> OK["200 OK"]
+    T2 --> OK
+    T3 --> OK
+
+    OK --> RP["Provider: reload getAllTickets"]
+    RP --> RL["DB: SELECT tickets"]
+    RL --> NL["notifyListeners"]
+    NL --> CS["CreateTicketScreen<br/>SnackBar hijau<br/>pop ke list"]
+    CS --> U2["User kembali ke list<br/>tiket baru muncul di atas"]

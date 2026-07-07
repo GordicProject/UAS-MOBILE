@@ -1,0 +1,53 @@
+{
+  "theme": "base",
+  "themeVariables": {
+    "background": "#FFF6E0",
+    "primaryColor": "#FFD700",
+    "primaryTextColor": "#000000",
+    "primaryBorderColor": "#000000",
+    "lineColor": "#000000",
+    "secondaryColor": "#FFFFFF",
+    "tertiaryColor": "#FFFBF0",
+    "fontFamily": "Courier New, monospace",
+    "fontSize": "16px",
+    "fontWeight": "700"
+  },
+  "flowchart": {
+    "useMaxWidth": false,
+    "htmlLabels": true,
+    "curve": "basis",
+    "nodeSpacing": 50,
+    "rankSpacing": 60,
+    "padding": 15
+  },
+  "sequence": {
+    "useMaxWidth": false,
+    "diagramMarginX": 30,
+    "diagramMarginY": 20,
+    "actorMargin": 80,
+    "width": 180,
+    "height": 50,
+    "boxMargin": 12,
+    "boxTextMargin": 6,
+    "noteMargin": 12,
+    "messageMargin": 40,
+    "mirrorActors": true,
+    "bottomMarginAdj": 1,
+    "useMaxWidth": false
+  },
+  "er": {
+    "useMaxWidth": false,
+    "diagramPadding": 25,
+    "layoutDirection": "TB",
+    "minEntityWidth": 100,
+    "minEntityHeight": 75,
+    "entityPadding": 15,
+    "stroke": "#000000",
+    "fill": "#FFD700",
+    "fontSize": 14
+  },
+  "stateDiagram": {
+    "useMaxWidth": false,
+    "fontSize": "16px"
+  }
+}

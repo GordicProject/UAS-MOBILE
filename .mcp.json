@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "supabase": {
+      "type": "http",
+      "url": "https://mcp.supabase.com/mcp?project_ref=eblilamcydtnafqhzcxa&access_token=sbp_eb7892d69b86c231ac1ac012a91dca35526d0ddd"
+    }
+  }
+}

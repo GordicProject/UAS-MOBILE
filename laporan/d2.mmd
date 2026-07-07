@@ -1,0 +1,8 @@
+flowchart LR
+    U["User tap tombol<br/>'Buat Tiket'"] --> S1["CreateTicketScreen<br/>.onSubmit()"]
+    S1 --> TP["TicketProvider<br/>.createTicket()"]
+    TP --> SS["SupabaseService<br/>.createTicket()<br/>insert tickets"]
+    TP --> SN["SupabaseService<br/>.addNotification()<br/>insert notifications"]
+    SS --> PL["Provider notifyListeners()"]
+    SN --> PL
+    PL --> TL["TicketListScreen<br/>re-build otomatis"]

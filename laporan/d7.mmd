@@ -1,0 +1,53 @@
+%% FOLDER STRUCTURE — eTicketing Project
+graph TD
+    Root["eTicketing/"]
+
+    subgraph Src["lib/"]
+        Core["core/"]
+        Data["data/"]
+        Pres["presentation/"]
+        Svc["services/"]
+    end
+
+    Root --> Src
+    Root --> DS["database_setup.sql"]
+    Root --> PY["pubspec.yaml"]
+    Root --> LP["laporan/"]
+
+    Core --> Router["router/app_router.dart"]
+    Core --> SCfg["supabase_config.dart"]
+    Core --> Theme["theme/app_theme.dart"]
+    Core --> Val["utils/validators.dart"]
+
+    Data --> DM["dummy_data.dart"]
+    Data --> MD["models/"]
+
+    MD --> UM["user_model.dart"]
+    MD --> TM["ticket_model.dart"]
+    MD --> NM["notification_model.dart"]
+
+    Pres --> PV["providers/"]
+    Pres --> SCR["screens/"]
+    Pres --> WD["widgets/"]
+
+    PV --> AUP["auth_provider.dart"]
+    PV --> TTP["ticket_provider.dart"]
+    PV --> THP["theme_provider.dart"]
+
+    SCR --> SPL["splash_screen.dart"]
+    SCR --> LOG["login_screen.dart"]
+    SCR --> REG["register_screen.dart"]
+    SCR --> RSP["reset_password_screen.dart"]
+    SCR --> DSH["dashboard_screen.dart"]
+    SCR --> TCL["tickets_list_screen.dart"]
+    SCR --> NTF["notification_screen.dart"]
+    SCR --> PFL["profile_screen.dart"]
+    SCR --> ADM["admin/user_management_screen.dart"]
+
+    WD --> TC["ticket_card_widget.dart"]
+    WD --> SB["status_badge_widget.dart"]
+    WD --> EW["empty_widget.dart"]
+    WD --> ERW["error_widget.dart"]
+    WD --> LW["loading_widget.dart"]
+
+    Svc --> SSV["supabase_service.dart"]

@@ -1,0 +1,30 @@
+flowchart TD
+    Splash["Splash /splash<br/>cek token SharedPreferences"]
+
+    Splash --> T{Token valid?}
+    T -- No --> Login["Login /login"]
+    T -- Yes --> Shell["Main Shell /<br/>BottomNav 4 tab"]
+
+    Shell --> D["Dashboard /dashboard"]
+    Shell --> TL["Ticket List /tickets"]
+    Shell --> N["Notifications /notifs"]
+    Shell --> P["Profile /profile"]
+
+    TL --> CT2["Buat Tiket /tickets/new<br/>tap +"]
+    TL --> DT2["Detail Tiket /tickets/:id"]
+
+    N --> FB["Filter Belum Dibaca<br/>WHERE is_read=false"]
+    N --> MA["Tandai Semua Dibaca"]
+    N --> DP2["Detail dari notif"]
+
+    P --> LO["Logout"]
+    P --> AM{role == admin?}
+    AM -- Yes --> US2["Admin: Kelola Pengguna"]
+    AM -- No --> PI["Profile Info"]
+
+    Login --> Reg["Register /register"]
+    Login --> RP2["Reset Password /reset-pwd"]
+
+    Reg --> Login
+
+    LO --> CLR["clear SharedPreferences<br/>signOut"] --> Login
