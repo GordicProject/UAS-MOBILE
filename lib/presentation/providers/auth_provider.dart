@@ -19,7 +19,7 @@ class AuthProvider extends ChangeNotifier {
     try {
       final user = await SupabaseService().login(email, password);
       if (user == null) {
-        _errorMessage = 'Email atau password salah';
+        _errorMessage = 'Email atau password salah / akun tidak aktif';
         _isLoading = false;
         notifyListeners();
         return false;
@@ -29,8 +29,28 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
       return true;
     } catch (e) {
-      _errorMessage = 'Terjadi kesalahan, coba lagi';
       _isLoading = false;
+      // Coba tebak jenis error agar user bisa paham
+      final msg = e.toString().toLowerCase();
+      if (msg.contains('connect') ||
+          msg.contains('timeout') ||
+          msg.contains('network') ||
+          msg.contains('socket') ||
+          msg.contains('ioexception') ||
+          msg.contains('exception')) {
+        _errorMessage =
+            'Tidak bisa sambung ke server. Pastikan internet nyala, lalu coba lagi.';
+      } else if (msg.contains('policy') ||
+          msg.contains('permission') ||
+          msg.contains('403') ||
+          msg.contains('Authorization')) {
+        _errorMessage =
+            'Akses ditolak server. Hubungi admin untuk konfigurasi RLS.';
+      } else if (msg.contains('401') || msg.contains('unauthorized')) {
+        _errorMessage = 'Email atau password salah.';
+      } else {
+        _errorMessage = 'Terjadi kesalahan: ${e.toString()}';
+      }
       notifyListeners();
       return false;
     }
